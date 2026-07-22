@@ -7,6 +7,7 @@ async function authenticatePesapal() {
     try {
 
         const response = await axios.post(
+
             "https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken",
 
             {
@@ -19,7 +20,12 @@ async function authenticatePesapal() {
                     "Content-Type": "application/json"
                 }
             }
+
         );
+
+
+        console.log("PesaPal Response:");
+        console.log(response.data);
 
 
         return response.data.token;
@@ -27,11 +33,22 @@ async function authenticatePesapal() {
 
     } catch(error) {
 
-        console.log("PesaPal authentication failed");
+
+        console.log("PesaPal Error:");
+
+        if(error.response){
+
+            console.log(error.response.data);
+
+            return null;
+
+        }
+
 
         console.log(error.message);
 
         return null;
+
     }
 
 }
