@@ -1,45 +1,62 @@
 const express = require("express");
 const cors = require("cors");
+
 require("dotenv").config();
 
 const app = express();
 
+const shopifyWebhook =
+require("./shopify/webhookHandler");
+
+
 app.use(cors());
 app.use(express.json());
 
+
 const PORT = process.env.PORT || 3000;
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("Nova AI Fulfillment is running 🚀");
-});
 
-// Shopify webhook receiver (we will connect Shopify here)
-app.post("/shopify/order-created", (req, res) => {
-  const order = req.body;
 
-  console.log("New Shopify Order Received:");
-  console.log(order);
+app.get("/", (req,res)=>{
 
-  res.status(200).send({
-    message: "Order received by Nova AI Fulfillment"
-  });
-});
+    res.send(
+        "Nova AI Fulfillment is online 🚀"
+    );
 
-// PesaPal payment notification receiver (IPN)
-app.post("/pesapal/payment-status", (req, res) => {
-
-  const payment = req.body;
-
-  console.log("PesaPal Payment Update:");
-  console.log(payment);
-
-  res.status(200).send({
-    message: "Payment notification received"
-  });
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Nova AI Fulfillment running on port ${PORT}`);
+
+app.post(
+"/shopify/order-created",
+shopifyWebhook.handleOrderCreated
+);
+
+
+
+app.post(
+"/pesapal/payment-status",
+(req,res)=>{
+
+    console.log(
+        "PesaPal update received:"
+    );
+
+    console.log(req.body);
+
+
+    res.json({
+        received:true
+    });
+
+});
+
+
+
+app.listen(PORT,()=>{
+
+    console.log(
+        `Nova AI running on port ${PORT}`
+    );
+
 });
