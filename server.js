@@ -1,8 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const paymentRoutes = require("./routes/paymentRoutes");
-
-app.use("/payments", paymentRoutes);
 
 require("dotenv").config();
 
@@ -11,16 +8,20 @@ const app = express();
 const shopifyWebhook =
 require("./shopify/webhookHandler");
 
+const paymentRoutes =
+require("./routes/paymentRoutes");
+
 
 app.use(cors());
 app.use(express.json());
 
 
-const PORT = process.env.PORT || 3000;
+// Payment routes
+app.use("/payments", paymentRoutes);
 
 
-
-app.get("/", (req,res)=>{
+// Home test route
+app.get("/", (req, res) => {
 
     res.send(
         "Nova AI Fulfillment is online 🚀"
@@ -29,34 +30,37 @@ app.get("/", (req,res)=>{
 });
 
 
-
+// Shopify webhook receiver
 app.post(
-"/shopify/order-created",
-shopifyWebhook.handleOrderCreated
+    "/shopify/order-created",
+    shopifyWebhook.handleOrderCreated
 );
 
 
-
+// PesaPal payment notification receiver
 app.post(
-"/pesapal/payment-status",
-(req,res)=>{
+    "/pesapal/payment-status",
+    (req, res) => {
 
-    console.log(
-        "PesaPal update received:"
-    );
+        console.log(
+            "PesaPal update received:"
+        );
 
-    console.log(req.body);
-
-
-    res.json({
-        received:true
-    });
-
-});
+        console.log(req.body);
 
 
+        res.json({
+            received: true
+        });
 
-app.listen(PORT,()=>{
+    }
+);
+
+
+const PORT = process.env.PORT || 3000;
+
+
+app.listen(PORT, () => {
 
     console.log(
         `Nova AI running on port ${PORT}`
