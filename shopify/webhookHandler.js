@@ -1,22 +1,62 @@
-const orderService = require("../services/orderService");
+const orderService =
+require("../services/orderService");
 
-function handleOrderCreated(req, res) {
 
-    const order = req.body;
+const {
+handleOrderPayment
+}
+=
+require("../services/paymentService");
 
-    console.log("Shopify order received:");
+
+
+async function handleOrderCreated(req,res){
+
+
+    const order =
+    req.body;
+
+
+
+    console.log(
+        "New Shopify order received:"
+    );
+
+
     console.log(order);
 
-    const result = orderService.processNewOrder(order);
+
+
+    const orderResult =
+    orderService.processNewOrder(order);
+
+
+
+    const paymentResult =
+    await handleOrderPayment(order);
+
+
 
     res.status(200).json({
-        success: true,
-        message: "Order processed by Nova AI",
-        result
+
+        success:true,
+
+        order:
+        orderResult,
+
+
+        payment:
+        paymentResult
+
     });
+
 
 }
 
+
+
 module.exports = {
+
     handleOrderCreated
+
 };
