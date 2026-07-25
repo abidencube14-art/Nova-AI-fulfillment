@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { getHeaders } = require("./linkwaAuth");
+const { getHeaders } = require("./auth");
 
 const BASE_URL = process.env.LINKWA_BASE_URL;
 
