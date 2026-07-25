@@ -8,10 +8,13 @@ require("./routes/demoOrder");
 const getIpn = require("./routes/getIpn");
 const linkwaRoutes = require("./routes/linkwa");
 const shopifyRoutes = require("./routes/shopify");
+const requestLogger = require("./middleware/requestLogger");
+const errorHandler = require("./middleware/errorHandler");
 
 require("dotenv").config();
 
 const app = express();
+app.disable("x-powered-by");
 
 const shopifyWebhook =
 require("./shopify/webhookHandler");
@@ -22,6 +25,7 @@ require("./routes/paymentRoutes");
 
 app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 app.use("/test", testRoutes);
 app.use("/orders", orderRoutes);
 app.use("/demo-payment",demoOrder);
@@ -73,6 +77,7 @@ app.post(
 
 const PORT = process.env.PORT || 3000;
 
+app.use(errorHandler);
 
 app.listen(PORT, () => {
 
