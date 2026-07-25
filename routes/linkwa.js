@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 
 });
 
-router.post("/create-payment", async (req, res) => {
+router.get("/create-payment", async (req, res) => {
 
     try {
 
