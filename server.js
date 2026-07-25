@@ -6,6 +6,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const demoOrder =
 require("./routes/demoOrder");
 const getIpn = require("./routes/getIpn");
+const linkwaRoutes = require("./routes/linkwa");
 
 require("dotenv").config();
 
@@ -24,6 +25,7 @@ app.use("/test", testRoutes);
 app.use("/orders", orderRoutes);
 app.use("/demo-payment",demoOrder);
 app.use("/ipn-list", getIpn);
+app.use("/linkwa", linkwaRoutes);
 
 
 // Payment routes
