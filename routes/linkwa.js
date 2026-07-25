@@ -3,11 +3,11 @@ const router = express.Router();
 
 const {
     createPaymentLink
-} = require("../services/linkwa/linkwaPayments");
+} = require("../services/linkwa/payments");
 
 const {
     paymentWebhook
-} = require("../services/linkwa/linkwaWebhook");
+} = require("../services/linkwa/webhook");
 
 router.get("/", (req, res) => {
 
