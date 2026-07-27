@@ -10,10 +10,22 @@ const linkwaRoutes = require("./routes/linkwa");
 const shopifyRoutes = require("./routes/shopify");
 const requestLogger = require("./middleware/requestLogger");
 const errorHandler = require("./middleware/errorHandler");
+const {
+    helmet,
+    cors,
+    limiter
+} = require("./middleware/security");
 
 require("dotenv").config();
 
 const app = express();
+app.use(helmet());
+
+app.use(cors({
+    origin: true
+}));
+
+app.use(limiter);
 app.disable("x-powered-by");
 
 const shopifyWebhook =
