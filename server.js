@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const testRoutes =
 require("./routes/testRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -36,7 +35,6 @@ const paymentRoutes =
 require("./routes/paymentRoutes");
 
 
-app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 app.use("/test", testRoutes);
