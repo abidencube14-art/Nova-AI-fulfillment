@@ -14,10 +14,12 @@ const {
     cors,
     limiter
 } = require("./middleware/security");
+const validateConfig = require("./config/validateConfig");
 
 require("dotenv").config();
 
 const app = express();
+validateConfig();
 app.use(helmet());
 
 app.use(cors({
