@@ -6,8 +6,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const demoOrder =
 require("./routes/demoOrder");
 const getIpn = require("./routes/getIpn");
-const linkwaRoutes = require("./routes/linkwa");
-const shopifyRoutes = require("./routes/shopify");
+const apiRoutes = require("./routes/api");
 const requestLogger = require("./middleware/requestLogger");
 const errorHandler = require("./middleware/errorHandler");
 const {
@@ -42,8 +41,7 @@ app.use("/test", testRoutes);
 app.use("/orders", orderRoutes);
 app.use("/demo-payment",demoOrder);
 app.use("/ipn-list", getIpn);
-app.use("/linkwa", linkwaRoutes);
-app.use("/shopify", shopifyRoutes);
+app.use("/api/v1", apiRoutes);
 
 
 // Payment routes
